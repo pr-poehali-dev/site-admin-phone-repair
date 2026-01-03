@@ -125,18 +125,45 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        <header className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-foreground flex items-center gap-3">
-              <Icon name="Wrench" size={36} className="text-primary" />
-              Панель администратора
-            </h1>
-            <p className="text-muted-foreground mt-1">Управление ремонтами и заказами</p>
+        <header className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-foreground flex items-center gap-3">
+                <Icon name="Wrench" size={36} className="text-primary" />
+                Панель администратора
+              </h1>
+              <p className="text-muted-foreground mt-1">Управление ремонтами и заказами</p>
+            </div>
+            <Button size="lg" className="gap-2">
+              <Icon name="Plus" size={20} />
+              Новый заказ
+            </Button>
           </div>
-          <Button size="lg" className="gap-2">
-            <Icon name="Plus" size={20} />
-            Новый заказ
-          </Button>
+          
+          <div className="flex gap-2 w-full max-w-2xl">
+            <div className="relative flex-1">
+              <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Поиск по клиенту, устройству или номеру заказа..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Select value={filterStatus} onValueChange={setFilterStatus}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Статус" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Все статусы</SelectItem>
+                <SelectItem value="new">Новый</SelectItem>
+                <SelectItem value="diagnostics">Диагностика</SelectItem>
+                <SelectItem value="repair">Ремонт</SelectItem>
+                <SelectItem value="completed">Завершён</SelectItem>
+                <SelectItem value="issued">Выдан</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -204,32 +231,9 @@ export default function Index() {
           <TabsContent value="orders" className="space-y-4 mt-6">
             <Card>
               <CardHeader>
-                <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-                  <div>
-                    <CardTitle>Управление заказами</CardTitle>
-                    <CardDescription>Отслеживание статуса ремонтов</CardDescription>
-                  </div>
-                  <div className="flex gap-2 w-full md:w-auto">
-                    <Input
-                      placeholder="Поиск по клиенту, устройству..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="md:w-64"
-                    />
-                    <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger className="w-[150px]">
-                        <SelectValue placeholder="Статус" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Все статусы</SelectItem>
-                        <SelectItem value="new">Новый</SelectItem>
-                        <SelectItem value="diagnostics">Диагностика</SelectItem>
-                        <SelectItem value="repair">Ремонт</SelectItem>
-                        <SelectItem value="completed">Завершён</SelectItem>
-                        <SelectItem value="issued">Выдан</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div>
+                  <CardTitle>Управление заказами</CardTitle>
+                  <CardDescription>Отслеживание статуса ремонтов</CardDescription>
                 </div>
               </CardHeader>
               <CardContent>
